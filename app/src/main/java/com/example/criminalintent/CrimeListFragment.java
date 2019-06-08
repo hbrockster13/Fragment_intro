@@ -15,8 +15,9 @@ import com.example.criminalintent.Models.CrimeLab;
 
 import java.util.List;
 
-public class CrimeListFragment extends Fragment
+public class  CrimeListFragment extends Fragment
 {
+    private static final String TAG = "CriminalListFragment: ";
     private Button mCrime1;
     private Button mCrime2;
 
@@ -55,6 +56,8 @@ public class CrimeListFragment extends Fragment
                 Toast.makeText(getActivity(), crime.getTitle() + "clicked",Toast.LENGTH_SHORT).show();
             }
         });
+
         return v;
     }
+
 }
