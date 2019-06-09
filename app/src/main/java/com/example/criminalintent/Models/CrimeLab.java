@@ -24,16 +24,14 @@ public class CrimeLab
     {
         mCrimes = new ArrayList<>();
 
-        Crime crime1 = new Crime();
-        crime1.setTitle("Crime 1");
-        crime1.setmSolved(false);
+        for (int i = 0; i < 100; ++i)
+        {
+            Crime crime = new Crime();
+            crime.setTitle("Crime #" + i);
+            crime.setmSolved(i % 2 == 0);//even number crimes are solved
+            mCrimes.add(crime);
+        }
 
-        Crime crime2 = new Crime();
-        crime1.setTitle("Crime 2");
-        crime1.setmSolved(true);
-
-        mCrimes.add(crime1);
-        mCrimes.add(crime2);
 
     }
 
