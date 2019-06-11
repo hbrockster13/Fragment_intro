@@ -54,7 +54,7 @@ public class  CrimeListFragment extends Fragment
         public void onClick(View v)
         {
             Log.i(TAG, "CLICKED!!!!!!!!!!!!");
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getmID());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getmID());
             startActivity(intent);
 
         }
