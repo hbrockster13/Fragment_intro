@@ -1,5 +1,7 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +27,8 @@ public class CrimeFragment extends Fragment
 {
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "dialog_date";
+    private static final int REQUEST_DATE = 0;
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
@@ -76,14 +80,15 @@ public class CrimeFragment extends Fragment
         });
 
         mDateButton = v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getmDate().toString());
-        mDateButton.setOnClickListener(new View.OnClickListener()
+        updateDate();
+        mDateButton.setOnClickListener( new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 FragmentManager fragmentManager = getFragmentManager();
-                DatePickerFragement dialog = new DatePickerFragement();
+                DatePickerFragement dialog = DatePickerFragement.newInstance(mCrime.getmDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(fragmentManager, DIALOG_DATE);
             }
         });
@@ -101,4 +106,27 @@ public class CrimeFragment extends Fragment
 
         return v;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(resultCode != Activity.RESULT_OK)
+        {
+            return;
+        }
+        if(requestCode == REQUEST_DATE)
+        {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragement.EXTRA_DATE);
+            mCrime.setmDate(date);
+            updateDate();
+
+        }
+    }
+
+    private void updateDate()
+    {
+        mDateButton.setText(mCrime.getmDate().toString());
+    }
+
+
 }
