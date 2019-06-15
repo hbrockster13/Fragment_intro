@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.criminalintent.Models.Crime;
 import com.example.criminalintent.Models.CrimeLab;
+import com.example.criminalintent.database.CrimeDbSchema;
 
 import java.util.List;
 
@@ -81,6 +82,11 @@ public class  CrimeListFragment extends Fragment
         {
             Crime crime = mCrimes.get(i);
             crimeHolder.bind(crime);
+        }
+
+        public void setmCrimes(List<Crime> crimes)
+        {
+            mCrimes = crimes;
         }
 
         @Override
@@ -151,8 +157,16 @@ public class  CrimeListFragment extends Fragment
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getmCrimes();
 
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if(mAdapter == null)
+        {
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        }
+        else
+        {
+            mAdapter.setmCrimes(crimes);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 }

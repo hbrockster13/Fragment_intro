@@ -1,6 +1,8 @@
 package com.example.criminalintent;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +35,10 @@ public class CrimeFragment extends Fragment
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mDeleteButton;
+    private Button mSaveButton;
+
+
 
     public static CrimeFragment newInstance(UUID crimeID)
     {
@@ -104,6 +110,26 @@ public class CrimeFragment extends Fragment
             }
         });
 
+        mDeleteButton = v.findViewById(R.id.delete_crime);
+        mDeleteButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                buildAlertDialog();
+            }
+        });
+
+        mSaveButton = v.findViewById(R.id.save_button);
+        mSaveButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getActivity().finish();
+            }
+        });
+
         return v;
     }
 
@@ -137,5 +163,35 @@ public class CrimeFragment extends Fragment
         mDateButton.setText(mCrime.getmDate().toString());
     }
 
+    private void buildAlertDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        builder.setTitle("Delete Crime");
+        builder.setMessage("Are you sure you want to delete this Crime?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                CrimeLab.get(getActivity()).deleteCrime(mCrime);
+                getActivity().finish();
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                getActivity().finish();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }

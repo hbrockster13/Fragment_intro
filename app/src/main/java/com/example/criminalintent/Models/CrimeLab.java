@@ -125,6 +125,16 @@ public class CrimeLab
         return new CrimeCursorWrapper(cursor);
     }
 
+    public void deleteCrime(Crime crime)
+    {
+        //ContentValues values = getContentValue(crime);
+        String uuidString = crime.getmID().toString();
+        mDataBase.delete(
+                CrimeDbSchema.CrimeTable.NAME
+                , CrimeDbSchema.CrimeTable.Cols.UUID + " = ?"
+                , new String[]{uuidString});
+    }
+
 
 
 }//end of CrimeLab class
