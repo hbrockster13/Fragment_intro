@@ -72,7 +72,7 @@ public class DatePickerFragement extends DialogFragment
     private void sendResult(int resultCode, Date date)
     {
         if(getTargetFragment() == null)
-            return;;
+            return;
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE, date);
